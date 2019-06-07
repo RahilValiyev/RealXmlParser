@@ -1,5 +1,7 @@
 package xmlparser.dao;
 
+import org.apache.log4j.Logger;
+import validator.XsdValidator;
 import xmlparser.database.DataBase;
 import xmlparser.model.Employee;
 
@@ -16,6 +18,8 @@ import java.util.List;
 public class EmployeImpl implements EmployeeDao {
 
     DataBase dataBase = new DataBase();
+    Logger logger= Logger.getLogger(EmployeImpl.class);
+
 
 
     @Override
@@ -25,7 +29,7 @@ public class EmployeImpl implements EmployeeDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-
+        logger.info("connection start");
             connection = dataBase.connect();
             if (connection != null) {
                 ps = connection.prepareStatement(SqlQuery.GET_EMPLOYE);
@@ -51,9 +55,10 @@ public class EmployeImpl implements EmployeeDao {
 
 
         } catch (Exception e) {
-            //Todo log
+            logger.error(e);
             e.printStackTrace();
         } finally {
+            logger.info("connection end");
             DataBase.close(rs, ps, connection);
         }
 

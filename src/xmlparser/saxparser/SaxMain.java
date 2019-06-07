@@ -1,6 +1,8 @@
 package xmlparser.saxparser;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
+import validator.XsdValidator;
 import xmlparser.dao.EmployeImpl;
 import xmlparser.model.Employee;
 
@@ -14,9 +16,12 @@ public class SaxMain {
 
     public static void main(String[] args) {
 
+        Logger logger= Logger.getLogger(SaxMain.class);
+
         System.out.println("Hello World!");
 
         try {
+            logger.info("saxparser start");
             SAXParserFactory factory=SAXParserFactory.newInstance();
             SAXParser parser= factory.newSAXParser();
             ContentHandler content = new ContentHandler();
@@ -32,9 +37,12 @@ public class SaxMain {
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
+            logger.error(e);
         } catch (SAXException e) {
+            logger.error(e);
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error(e);
             e.printStackTrace();
         }
     }
